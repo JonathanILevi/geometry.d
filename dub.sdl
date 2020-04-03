@@ -1,0 +1,11 @@
+name "geometry"
+description "Geometric shapes and equations (extention of `linear`)"
+authors "Jonathan Levi"
+copyright "Copyright © 2018, Jonathan Levi"
+license "CC0"
+
+target	"library"
+targetPath	"build"
+
+dependency "cst"	version="~>1.0"
+dependency "linear"	version="~>1.0.0-beta"
