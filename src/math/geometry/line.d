@@ -46,10 +46,40 @@ T distance(T)(Point!(Vec!(T,2)) p, PointLine!T l) {
 T distance(T)(PointLine!T l, Point!(Vec!(T,2)) p) {
 	return distance(p, cast(VecLine!T) l);
 }
+
+/// This does not work when two lines cross.
+/// TODO: Make this work for when two lines cross.
+/// TODO: This needs optimized.
+T distance(T)(VecLine!T l, VecLine!T m) {
+	import std.algorithm.comparison;
+	return min(
+		distance(l.pos	,m),
+		distance(l.pos+l.vec	,m),
+		distance(m.pos	,l),
+		distance(m.pos+m.vec	,l),
+	);
+}
+/// Ditto
+T distance(T)(PointLine!T l, PointLine!T m) {
+	import std.algorithm.comparison;
+	return min(
+		distance(l.a	,m),
+		distance(l.b	,m),
+		distance(m.a	,l),
+		distance(m.b	,l),
+	);
+}
+
+
+@("Point Line Distance")
 unittest {
 	assert(distance(pvec(1f,0f), PPLine!float(pvec(0f,1f),pvec(0f,-1f)))==1f);
 	assert(distance(pvec(-1f,0f), PPLine!float(pvec(0f,1f),pvec(0f,-1f)))==1f);
 	assert(distance(pvec(1f,0f), PPLine!float(pvec(0f,-1f),pvec(0f,1f)))==1f);
 	assert(distance(pvec(1f,2f), PPLine!float(pvec(0f,1f),pvec(0f,-1f)))==vec_.distance(vec(1f,2f), vec(0f,1f)));
+}
+@("Line Line Distance")
+unittest {
+	assert(distance(PPLine!float(pvec(1f,0f), pvec(2f,0f)), PPLine!float(pvec(0f,1f),pvec(0f,-1f)))==1f);
 }
  
