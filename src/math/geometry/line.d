@@ -40,14 +40,11 @@ T distance(T)(Point!(Vec!(T,2)) p, VecLine!T l) {
 T distance(T)(VecLine!T l, Point!(Vec!(T,2)) p) {
 	return distance(p,l);
 }
-T distance(T)(Point!(Vec!(T,2)) p, PPLine!T l) {
+T distance(T)(Point!(Vec!(T,2)) p, PointLine!T l) {
 	return distance!T(p, cast(VecLine!T) l);
 }
 T distance(T)(PointLine!T l, Point!(Vec!(T,2)) p) {
 	return distance(p, cast(VecLine!T) l);
-}
-T distance(T)(VecLine!T l, Point!(Vec!(T,2)) p) {
-	return distance(p,l);
 }
 unittest {
 	assert(distance(pvec(1f,0f), PPLine!float(pvec(0f,1f),pvec(0f,-1f)))==1f);
